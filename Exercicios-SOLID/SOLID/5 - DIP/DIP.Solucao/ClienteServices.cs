@@ -5,9 +5,9 @@ namespace SOLID.DIP.Solucao
     public class ClienteServices : IClienteServices
     {
         private readonly IClienteRepository _clienteRepository;
-        private readonly IEmailServices _emailServices;
+        private readonly IEmailServices _emailServices; // referencia de uma interface
 
-        public ClienteServices(
+        public ClienteServices( // a classe ClienteServices não precisa criar o objeto  emailServices e  clienteRepository, invertemos o controle, quem consumir essa classe pode diz o objeto a ser injetado
             IEmailServices emailServices, 
             IClienteRepository clienteRepository)
         {
@@ -20,7 +20,7 @@ namespace SOLID.DIP.Solucao
             if (!cliente.Validar())
                 return "Dados inválidos";
 
-            _clienteRepository.AdicionarCliente(cliente);
+            _clienteRepository.AdicionarCliente(cliente); // sigo o contrato
 
             _emailServices.Enviar("empresa@empresa.com", cliente.Email.Endereco, "Bem Vindo", "Parabéns está Cadastrado");
 
